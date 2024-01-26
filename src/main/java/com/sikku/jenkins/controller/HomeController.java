@@ -8,7 +8,7 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String showHome() {
-		return "welcome to jenkins";
+		return "welcome to jenkins again";
 	}
 
 }
