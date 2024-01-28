@@ -18,6 +18,10 @@ pipeline {
             }
         }
         stage('Deploy on test') {
+            input{
+              message "Should we continue?"
+              ok "yes we should"
+            }
             steps {
                 echo "hello"
                 deploy adapters: [tomcat9(credentialsId: 'a8ef5188-5966-4914-8fa6-6f1267f52f97', path: '', url: 'http://10.0.2.15:1010')], contextPath: '/test', war: '**/*.war'
