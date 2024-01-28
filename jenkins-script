@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "MAVEN_HOME"
+    }
+
+    stages {
+        stage('Test') {
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage('Build') {
+            steps {
+                sh "mvn package"
+            }
+        }
+        stage('Deploy on test') {
+            steps {
+                echo "hello"
+                deploy adapters: [tomcat9(credentialsId: 'a8ef5188-5966-4914-8fa6-6f1267f52f97', path: '', url: 'http://10.0.2.15:1010')], contextPath: '/test', war: '**/*.war'
+            }
+        }
+        stage('Deploy on prod') {
+            steps {
+                echo "hello"
+                deploy adapters: [tomcat9(credentialsId: 'a8ef5188-5966-4914-8fa6-6f1267f52f97', path: '', url: 'http://10.0.2.15:1010')], contextPath: '/prod', war: '**/*.war'
+            }
+        }
+    }
+}
